@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehdi Mobtahij - Alternant Comptable & Audit</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #c4c4c4;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 35%;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: hidden;
+            background: #1a1a1a;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .main-content {
+            width: 65%;
+            margin-left: 35%;
+            padding: 3rem 2rem;
+            background: #1a1a1a;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .name {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            color: #4a9eff;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: #c4c4c4;
+            max-width: 450px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            margin-bottom: 1.5rem;
+        }
+
+        .mobility {
+            font-size: 0.9rem;
+            color: #4a9eff;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .navigation {
+            margin: 2rem 0;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .nav-item {
+            padding: 1rem 0;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            border-left-color: #4a9eff;
+            padding-left: 2rem;
+        }
+
+        .nav-item span {
+            color: #4a9eff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .social-links a {
+            color: #4a9eff;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            color: #6bb6ff;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 1s; }
+        .section:nth-child(2) { animation-delay: 1.2s; }
+        .section:nth-child(3) { animation-delay: 1.4s; }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #4a9eff;
+        }
+
+        .experience-item,
+        .education-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .experience-item:hover,
+        .education-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(74, 158, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .job-title {
+            color: #4a9eff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            color: #ffffff;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .period {
+            color: rgba(196, 196, 196, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .description-text {
+            color: rgba(196, 196, 196, 0.8);
+            line-height: 1.7;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .skill-category:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(74, 158, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: #4a9eff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: rgba(196, 196, 196, 0.8);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill-list li::before {
+            content: '▸';
+            color: #4a9eff;
+            position: absolute;
+            left: 0;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: rgba(196, 196, 196, 0.8);
+        }
+
+        .contact-item i {
+            color: #4a9eff;
+            width: 20px;
+            margin-right: 1rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(74, 158, 255, 0.1);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #4a9eff;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .download-btn:hover {
+            background: rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 158, 255, 0.2);
+        }
+
+        .download-btn i {
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(74, 158, 255, 0.03), transparent);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-elements::before {
+            top: 20%;
+            right: 15%;
+            animation-delay: -2s;
+        }
+
+        .floating-elements::after {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: -4s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(180deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 2rem 1rem;
+            }
+            
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+                padding: 2rem 1rem;
+            }
+            
+            .name {
+                font-size: 2.5rem;
+            }
+        }
+
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements"></div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="header">
+                <h1 class="name">Mehdi Mobtahij</h1>
+                <p class="title">Alternant Comptable, Audit et Expertise Comptable</p>
+                <p class="description">
+                    Étudiant en Master 2 Audit et Expertise Comptable, passionné par l'analyse financière 
+                    et les processus comptables. Je recherche une alternance pour appliquer 
+                    mes compétences en comptabilité, audit et gestion financière.
+                </p>
+                <p class="mobility">Mobile sur toute la France</p>
+            </div>
+
+            <nav class="navigation">
+                <div class="nav-item active" data-section="experience">
+                    <span>Expériences</span>
+                </div>
+                <div class="nav-item" data-section="education">
+                    <span>Formation</span>
+                </div>
+                <div class="nav-item" data-section="skills">
+                    <span>Compétences</span>
+                </div>
+                <div class="nav-item" data-section="contact">
+                    <span>Contact</span>
+                </div>
+            </nav>
+
+            <div class="social-links">
+                <a href="mailto:mehdimobtahij@outlook.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/medmobtahij/" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="tel:+33756756752" title="Téléphone">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <section id="experience" class="section">
+                <h2>Expériences Professionnelles</h2>
+                
+                <div class="experience-item scroll-fade">
+                    <div class="job-title">Stagiaire en Audit</div>
+                    <div class="company">Logarithme Cabinet de Conseil et d'Audit – Maroc</div>
+                    <div class="period">Juin 2025 – Août 2025</div>
+                    <div class="description-text">
+                        • Soutien aux équipes d'audit lors de missions chez les clients<br>
+                        • Vérification des comptes, tests de procédure et contrôle des documents comptables<br>
+                        • Rédaction de notes de synthèse et mise en évidence des anomalies éventuelles
+                    </div>
+                </div>
+
+                <div class="experience-item scroll-fade">
+                    <div class="job-title">Assistant Comptable</div>
+                    <div class="company">LUCA CENTER – Maroc</div>
+                    <div class="period">Juin 2024 – Août 2024</div>
+                    <div class="description-text">
+                        • Saisie des opérations comptables : factures d'achats, ventes et mouvements bancaires<br>
+                        • Classement et organisation des pièces justificatives<br>
+                        • Contrôle de base des écarts entre pièces et enregistrements
+                    </div>
+                </div>
+
+                <div class="experience-item scroll-fade">
+                    <div class="job-title">Assistant Comptable</div>
+                    <div class="company">LUCA CENTER – Maroc</div>
+                    <div class="period">Juin 2023 – Août 2023</div>
+                    <div class="description-text">
+                        • Suivi des factures clients et fournisseurs (saisie et vérification)<br>
+                        • Soutien à la création de tableaux de bord comptables<br>
+                        • Assistance à la préparation des déclarations fiscales périodiques
+                    </div>
+                </div>
+
+                <div class="experience-item scroll-fade">
+                    <div class="job-title">Stagiaire Administratif</div>
+                    <div class="company">Direction Générale des Impôts (DGI) – Maroc</div>
+                    <div class="period">Juillet 2022 – Août 2022</div>
+                    <div class="description-text">
+                        • Contrôle fiscal d'une société : comparaison des factures émises avec les inventaires<br>
+                        • Vérification des dossiers de création d'entreprise<br>
+                        • Création d'une base de données pour classer les quartiers de Marrakech
+                    </div>
+                </div>
+            </section>
+
+            <section id="education" class="section">
+                <h2>Formation</h2>
+                
+                <div class="education-item scroll-fade">
+                    <div class="job-title">Master 2 en Audit et Expertise Comptable</div>
+                    <div class="company">Brest Business School, France</div>
+                    <div class="period">2025 - 2026</div>
+                    <div class="description-text">
+                        Formation spécialisée en audit, expertise comptable et conseil aux entreprises.
+                        Recherche active d'une alternance pour mettre en pratique les compétences acquises.
+                    </div>
+                </div>
+
+                <div class="education-item scroll-fade">
+                    <div class="job-title">Master 1 en Gestion Financière et Comptable</div>
+                    <div class="company">École Nationale de Commerce et de Gestion, Maroc</div>
+                    <div class="period">2021 - 2025</div>
+                    <div class="description-text">
+                        Modules suivis : Gestion de portefeuille, Comptabilité approfondie, Gestion financière, 
+                        Audit comptable et financier, Gestion budgétaire et prévisionnelle
+                    </div>
+                </div>
+
+                <div class="education-item scroll-fade">
+                    <div class="job-title">Baccalauréat en Sciences Économiques et Gestion</div>
+                    <div class="company">Lycée ElAraki, Marrakech</div>
+                    <div class="period">2020 - 2021</div>
+                    <div class="description-text">
+                        Formation de base en économie et gestion, avec une spécialisation en analyse financière 
+                        et maîtrise des outils informatiques.
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="section">
+                <h2>Compétences</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category scroll-fade">
+                        <h3>Outils Informatiques</h3>
+                        <ul class="skill-list">
+                            <li>Power BI - Analyse financière</li>
+                            <li>Sage - Liasses fiscales</li>
+                            <li>Excel - VBA avancé</li>
+                            <li>Pennylane - Lettrage & facturation</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category scroll-fade">
+                        <h3>Compétences Techniques</h3>
+                        <ul class="skill-list">
+                            <li>Audit comptable et financier</li>
+                            <li>Gestion de portefeuille</li>
+                            <li>Comptabilité approfondie</li>
+                            <li>Gestion budgétaire</li>
+                            <li>Déclarations fiscales</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category scroll-fade">
+                        <h3>Soft Skills</h3>
+                        <ul class="skill-list">
+                            <li>Rigueur</li>
+                            <li>Sens de l'organisation</li>
+                            <li>Esprit d'analyse</li>
+                            <li>Capacité d'adaptation</li>
+                            <li>Travail en équipe</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category scroll-fade">
+                        <h3>Langues</h3>
+                        <ul class="skill-list">
+                            <li>Français (bilingue)</li>
+                            <li>Anglais (B2 - TOEIC 880)</li>
+                            <li>Permis B</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="section">
+                <h2>Contact & Informations</h2>
+                
+                <div class="contact-info scroll-fade">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>mehdimobtahij@outlook.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+33 7 56 75 67 52</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <a href="https://www.linkedin.com/in/medmobtahij/" target="_blank" style="color: #c4c4c4; text-decoration: none;">LinkedIn Profile</a>
+                    </div>
+
+                    <a href="cv.pdf" target="_blank" class="download-btn">
+                        <span>Télécharger le CV complet</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                const sectionId = this.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = ['experience', 'education', 'skills', 'contact'];
+            const scrollPosition = window.scrollY + 200;
+
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+                    }
+                }
+            });
+        });
+
+        function createFloatingElements() {
+            for (let i = 0; i < 3; i++) {
+                const element = document.createElement('div');
+                element.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 4 + 1}px;
+                    height: ${Math.random() * 4 + 1}px;
+                    background: rgba(255, 165, 0, 0.2);
+                    border-radius: 50%;
+                    top: ${Math.random() * 100}%;
+                    left: ${Math.random() * 100}%;
+                    animation: float ${Math.random() * 4 + 6}s ease-in-out infinite;
+                    animation-delay: ${Math.random() * 2}s;
+                `;
+                document.querySelector('.floating-elements').appendChild(element);
+            }
+        }
+
+        createFloatingElements();
+
+        document.querySelectorAll('.experience-item, .education-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.01)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
